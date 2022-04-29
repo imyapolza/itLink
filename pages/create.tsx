@@ -53,7 +53,8 @@ export default function Create({ users }: ItemsState): React.ReactElement {
         (dataL.brand && dataL.brand.length > 0) ||
         (dataL.model && dataL.model.length > 0) ||
         (dataL.productionYear && dataL.productionYear.length > 0) ||
-        (dataL.mileage && dataL.mileage.length > 0)
+        (dataL.mileage && dataL.mileage.length > 0) ||
+        (dataL.body && dataL.body !== "all")
       ) {
         setForm(true);
       }

@@ -24,7 +24,7 @@ export interface ListProps {
   query: { page: string };
 }
 
-const limitPage = 3;
+const limitPage = 2;
 
 export async function getServerSideProps({ query }: ListProps) {
   const axios = require("axios").default;

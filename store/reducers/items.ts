@@ -55,8 +55,6 @@ export const items = (
         data.brand.length > 0 ||
         data.model.length > 0 ||
         data.productionYear.length > 0 ||
-        data.price_from.length > 0 ||
-        data.price_to.length > 0 ||
         data.body.length > 0 ||
         data.mileage_from.length > 0 ||
         data.mileage_to.length > 0
@@ -64,6 +62,7 @@ export const items = (
         const newCards = state.items?.filter((item) =>
           item.hasOwnProperty("technical_characteristics")
         );
+
         cards.push(...newCards);
       } else {
         cards.push(...state.items);
