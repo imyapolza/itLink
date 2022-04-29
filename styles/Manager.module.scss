@@ -1,0 +1,64 @@
+.h1 {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.cardImg {
+  width: 100%;
+}
+
+.cardPanel {
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.cardBody {
+  background-color: lightgrey;
+  border-radius: 10px;
+  height: 290px;
+  padding-left: 20px;
+  padding-top: 25px;
+}
+
+.noData {
+  width: 350px;
+  font-size: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+.buttonEdit {
+  cursor: pointer;
+  margin-top: 20px;
+  width: 91%;
+}
+
+.moreButton {
+  margin-top: 20px;
+}
+
+.pagination {
+  margin-top: 30px;
+  justify-content: center;
+}
+
+.card {
+  margin-left: 15px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  width: 95vw;
+  margin-right: auto;
+  margin-left: auto;
+  justify-content: center;
+}
+
+.cardTitle {
+  margin-top: 15px;
+}
+
+

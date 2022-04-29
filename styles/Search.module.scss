@@ -1,0 +1,118 @@
+.button {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 10px;
+  border: none;
+  background-color: #3f51b5;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 5px;
+  width: 100%;
+  margin-top: 10px;
+  cursor: pointer;
+
+  &__option {
+    background: lightcoral;
+  }
+
+  &__filter {
+    margin-bottom: 35px;
+  }
+}
+
+.selectFilter {
+  margin-left: auto;
+  width: 400px;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.allCards {
+  width: 606px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-right: auto;
+  margin-left: auto;
+  align-items: flex-start;
+}
+
+.filterBlock {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.openFilterBtn {
+  height: 40px;
+  width: 100px;
+}
+
+.card {
+  width: 18rem;
+  margin-top: 30px;
+  margin-left: 15px;
+}
+
+.cardImg {
+  width: 100%;
+}
+
+.cardBody {
+  background-color: lightgrey;
+  border-radius: 10px;
+  height: 290px;
+  padding-left: 20px;
+  padding-top: 25px;
+}
+
+.cardTitle {
+  margin-top: 15px;
+}
+
+.form {
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 80px;
+}
+
+.paginationBlock {
+  justify-content: center;
+  margin-top: 55px;
+}
+
+.buttonEdit {
+  cursor: pointer;
+  margin-top: 20px;
+  width: 91%;
+}
+
+.noData {
+  width: 350px;
+  font-size: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.moreButton {
+  margin-top: 20px;
+}
+
+@media (max-width: 669px) {
+  .filterBlock {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 590px) {
+  .form {
+    width: 95vw;
+    margin-top: 40px;
+  }
+
+  .allCards {
+    width: 95vw;
+  }
+}

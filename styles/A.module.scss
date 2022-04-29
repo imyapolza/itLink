@@ -1,0 +1,14 @@
+.link {
+  text-decoration: none;
+  font-size: 20px;
+  margin: 10px;
+}
+
+@media (max-width: 669px) {
+  .link {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 40px;
+    margin-left: 10px;
+  }
+}
