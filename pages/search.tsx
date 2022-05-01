@@ -301,7 +301,10 @@ export default function Search({
                   <Card.Text>Контакты: {item.contacts}</Card.Text>
                   <Card.Text>Цена: {item.price} долларов</Card.Text>
 
-                  <Card.Text>Дополнительные опции:</Card.Text>
+                  {Object.keys(userOptions).length > 0 ? (
+                    <Card.Text>Дополнительные опции:</Card.Text>
+                  ) : null}
+
                   {Object.keys(userOptions).map((key) => (
                     <Card.Text key={key}>
                       {key}: {userOptions[key]}{" "}

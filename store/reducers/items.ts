@@ -73,10 +73,6 @@ export const items = (
       });
       console.log("filteredName до", filteredName);
 
-      // if (filteredName.length === 0 && data["name"].length === 0) {
-      //   filteredName.push(...cards);
-      // }
-
       console.log("filteredName", filteredName);
 
       const filteredContacts = filteredName.filter(
