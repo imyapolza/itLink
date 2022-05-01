@@ -1,27 +1,23 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import {
-  activePageManager,
-  filterItem,
-  setItems,
-} from "../store/actions/items";
-import { Alert, Button, Card, Pagination } from "react-bootstrap";
-import A from "../components/A";
-import Head from "next/head";
-import { useTypedSelector } from "../store/hooks/useTypesSelector";
-import { useForm } from "react-hook-form";
-import { DataInterface } from "../decompose/dataFormation";
-import { MainContainer } from "../components/MainContainer";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { FeatureForm } from "../components/FeatureForm";
-import { BaseForm } from "../components/BaseForm";
-import { useRouter } from "next/router";
-import { urlItems } from "../consts/urlItems";
-import styles from "../styles/Search.module.scss";
-import Link from "next/link";
-import { SearchApi } from "./api/SearchApi";
-import { Api } from "./api/Api";
-import queryString from "query-string";
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { activePageManager, filterItem, setItems } from '../store/actions/items';
+import { Alert, Button, Card, Pagination } from 'react-bootstrap';
+import A from '../components/A';
+import Head from 'next/head';
+import { useTypedSelector } from '../store/hooks/useTypesSelector';
+import { useForm } from 'react-hook-form';
+import { DataInterface } from '../decompose/dataFormation';
+import { MainContainer } from '../components/MainContainer';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { FeatureForm } from '../components/FeatureForm';
+import { BaseForm } from '../components/BaseForm';
+import { useRouter } from 'next/router';
+import { urlItems } from '../consts/urlItems';
+import styles from '../styles/Search.module.scss';
+import Link from 'next/link';
+import { SearchApi } from './api/SearchApi';
+import { Api } from './api/Api';
+import queryString from 'query-string';
 
 export interface SearchProps {
   users: Array<DataInterface>;
@@ -35,7 +31,7 @@ interface ItemInterface {
 }
 
 export async function getServerSideProps({ query }: SearchProps) {
-  const axios = require("axios").default;
+  const axios = require('axios').default;
   const responseFirst = await axios.get(urlItems);
   const users = responseFirst.data;
   const responseSecond = await axios.get(urlItems);
@@ -51,20 +47,17 @@ interface Response<T> {
   data: T;
 }
 
-export default function Search({
-  users,
-  allItems,
-}: SearchProps): React.ReactElement {
+export default function Search({ users, allItems }: SearchProps): React.ReactElement {
   const dispatch = useDispatch();
   const [activePage, setActivePage] = useState<number>(1);
-  const [currentId, setCurrentId] = useState<string>("");
+  const [currentId, setCurrentId] = useState<string>('');
   const [filteredItems, setFilteredItems] = useState<Array<DataInterface>>();
   const [submitData, setSubmitData] = useState<any>();
   const [submit, setSubmit] = useState(false);
   const [empty, setEmpty] = useState(false);
-  const [allPath, setAllPath] = useState<string>("");
+  const [allPath, setAllPath] = useState<string>('');
   const sortedItems: Array<DataInterface> | undefined = useTypedSelector(
-    (state) => state.users["sortedItems"]
+    (state) => state.users['sortedItems'],
   );
   let userOptions: any = {};
   for (let key in users[0].options) {
@@ -74,10 +67,13 @@ export default function Search({
   const router = useRouter();
 
   const filteredItemsPath = router.asPath.slice(7);
+  console.log('filteredItemsPath', filteredItemsPath);
   const parsedPath = queryString.parse(filteredItemsPath);
 
+  console.dir('parsedPath', parsedPath);
+
   function generatePath() {
-    let finalPath = "search?";
+    let finalPath = 'search?';
 
     for (let key in submitData) {
       if (submitData[key].length > 0) {
@@ -96,13 +92,13 @@ export default function Search({
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: parsedPath,
   });
 
   useEffect(() => {
     if (sortedItems) {
-      setAllPath(sortedItems.map((item, index) => `id=${item.id}&`).join(""));
+      setAllPath(sortedItems.map((item, index) => `id=${item.id}&`).join(''));
     }
   }, [sortedItems, allPath]);
 
@@ -116,8 +112,6 @@ export default function Search({
     if (sortedItems && sortedItems.length > 0 && allPath.length > 0) {
       SearchApi.getCard(`${urlItems}/?${allPath}_page=${activePage}&_limit=2`)
         .then((resp: any) => {
-          console.log(`${urlItems}/?${allPath}_page=${activePage}&_limit=2`);
-          console.log("activePage", activePage);
           setFilteredItems(resp.data);
         })
 
@@ -127,16 +121,16 @@ export default function Search({
 
   useEffect(() => {
     const newObj: any = {
-      body: "",
-      brand: "",
-      contacts: "",
-      mileage_from: "",
-      mileage_to: "",
-      model: "",
-      name: "",
-      price_from: "",
-      price_to: "",
-      productionYear: "",
+      body: '',
+      brand: '',
+      contacts: '',
+      mileage_from: '',
+      mileage_to: '',
+      model: '',
+      name: '',
+      price_from: '',
+      price_to: '',
+      productionYear: '',
     };
 
     for (let key in parsedPath) {
@@ -154,8 +148,8 @@ export default function Search({
     setSubmit(true);
     setSubmitData(data);
 
-    if (data.body === "all") {
-      data.body = "";
+    if (data.body === 'all') {
+      data.body = '';
     }
 
     if (data !== undefined) {
@@ -186,7 +180,7 @@ export default function Search({
   }, [sortedItems, activePage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   function handleItems(currId: string) {
-    let isDelete = confirm("Действительно удалить?");
+    let isDelete = confirm('Действительно удалить?');
 
     if (isDelete) {
       setCurrentId(currId);
@@ -219,21 +213,23 @@ export default function Search({
     itemsP.length = 0;
     if (
       sortedItemsP[sortedItemsP.length - 1] &&
-      sortedItemsP[sortedItemsP.length - 1].active === false
+      sortedItemsP[sortedItemsP.length - 1].active === false &&
+      sortedItemsP[sortedItemsP.length - 2].number !== 1
     ) {
       sortedItemsP.pop();
     }
+
     itemsP.push(...sortedItemsP);
   }
 
-  console.log("itemsP", itemsP);
-  console.log("sortedItemsP", sortedItemsP);
+  console.log('filteredItems', filteredItems);
+  console.log('sortedItems', sortedItems);
 
-  console.log("sortedItems", sortedItems);
-  console.log("filteredItems", filteredItems);
+  console.log('sortedItemsP', sortedItemsP);
+  console.log('itemsP', itemsP);
 
   return (
-    <MainContainer keywords={"search"}>
+    <MainContainer keywords={'search'}>
       <Head>
         <meta></meta>
         <title>Найти</title>
@@ -252,51 +248,32 @@ export default function Search({
             filterChanges={true}
             description={false}
           />
-          <FeatureForm
-            errors={errors}
-            register={register}
-            filterChanges={true}
-          />
+          <FeatureForm errors={errors} register={register} filterChanges={true} />
           <Button className={styles.button} type="submit" variant="info">
             Отобразить данные
-          </Button>{" "}
+          </Button>{' '}
         </form>
 
         <div className={styles.allCards}>
           {filteredItems && !empty ? (
             filteredItems.map((item, index) => (
               <Card className={styles.card} key={index}>
-                <Card.Img
-                  className={styles.cardImg}
-                  variant="top"
-                  src={item.img}
-                />
+                <Card.Img className={styles.cardImg} variant="top" src={item.img} />
                 <Card.Body>
                   {item.technical_characteristics && (
                     <div className={styles.cardBody}>
                       <Card.Title>Технические характеристики</Card.Title>
+                      <Card.Text>Марка: {item.technical_characteristics.brand}</Card.Text>
+                      <Card.Text>Модель: {item.technical_characteristics.model}</Card.Text>
                       <Card.Text>
-                        Марка: {item.technical_characteristics.brand}
+                        Год выпуска: {item.technical_characteristics.productionYear}
                       </Card.Text>
-                      <Card.Text>
-                        Модель: {item.technical_characteristics.model}
-                      </Card.Text>
-                      <Card.Text>
-                        Год выпуска:{" "}
-                        {item.technical_characteristics.productionYear}
-                      </Card.Text>
-                      <Card.Text>
-                        Кузов: {item.technical_characteristics.body}
-                      </Card.Text>
-                      <Card.Text>
-                        Пробег: {item.technical_characteristics.mileage} км
-                      </Card.Text>
+                      <Card.Text>Кузов: {item.technical_characteristics.body}</Card.Text>
+                      <Card.Text>Пробег: {item.technical_characteristics.mileage} км</Card.Text>
                     </div>
                   )}
 
-                  <Card.Text className={styles.cardTitle}>
-                    Навание: {item.name}
-                  </Card.Text>
+                  <Card.Text className={styles.cardTitle}>Навание: {item.name}</Card.Text>
                   <Card.Text>Описание: {item.description}</Card.Text>
                   <Card.Text>Контакты: {item.contacts}</Card.Text>
                   <Card.Text>Цена: {item.price} долларов</Card.Text>
@@ -307,7 +284,7 @@ export default function Search({
 
                   {Object.keys(userOptions).map((key) => (
                     <Card.Text key={key}>
-                      {key}: {userOptions[key]}{" "}
+                      {key}: {userOptions[key]}{' '}
                     </Card.Text>
                   ))}
 
@@ -320,16 +297,11 @@ export default function Search({
                   <Button
                     className={styles.buttonEdit}
                     variant="danger"
-                    onClick={() => handleItems(String(item.id))}
-                  >
+                    onClick={() => handleItems(String(item.id))}>
                     Удалить
                   </Button>
                   <div className={styles.moreButton}>
-                    <A
-                      href={`/view/${item.id}`}
-                      text={"Подробнее"}
-                      key={item.id}
-                    />
+                    <A href={`/view/${item.id}`} text={'Подробнее'} key={item.id} />
                   </div>
                 </Card.Body>
               </Card>
@@ -349,8 +321,7 @@ export default function Search({
               <Pagination.Item
                 key={index}
                 active={activePage === item.number}
-                onClick={() => onClickPage(item)}
-              >
+                onClick={() => onClickPage(item)}>
                 {item.number}
               </Pagination.Item>
             ))}
