@@ -11,9 +11,9 @@ export const addItem = (data: DataInterface) => ({
   payload: data,
 });
 
-export const removeItem = (flag: boolean) => ({
+export const removeItem = (id: any) => ({
   type: ItemsActionTypes.REMOVE__ITEM,
-  payload: flag,
+  payload: id,
 });
 
 export const removeSortedItem = (flag: any) => ({
@@ -26,9 +26,13 @@ export const updateItem = (id: number) => ({
   payload: id,
 });
 
-export const filterItem = (data: DataInterface) => ({
+export const filterItem = (
+  data: DataInterface,
+  dataEmpty: any,
+  allItems: any
+) => ({
   type: ItemsActionTypes.FILTER__ITEM,
-  payload: data,
+  payload: { data: data, dataEmpty: dataEmpty, allItems: allItems },
 });
 
 export const activePageManager = (id: number) => ({

@@ -37,6 +37,7 @@ export default function Create({ users }: ItemsState): React.ReactElement {
     setValue,
     control,
     watch,
+    reset,
   } = useForm({
     mode: "onChange",
     defaultValues: dataL,
@@ -117,6 +118,9 @@ export default function Create({ users }: ItemsState): React.ReactElement {
     setSend(true);
   }
 
+  function handleCancelForm() {
+    setForm(false);
+  }
   return (
     <MainContainer keywords={"create"}>
       <MyVerticallyCenteredModal
@@ -164,7 +168,7 @@ export default function Create({ users }: ItemsState): React.ReactElement {
                 <Button
                   className={styles.techButton}
                   type="button"
-                  onClick={() => setForm(false)}
+                  onClick={() => handleCancelForm()}
                 >
                   Отменить добавление технических характеристик
                 </Button>

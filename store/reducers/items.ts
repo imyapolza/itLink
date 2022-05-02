@@ -27,40 +27,27 @@ export const items = (
       return { ...state, items: newItems };
 
     case ItemsActionTypes.REMOVE__ITEM:
+      console.log("removeaction", action.payload);
       const newUsers = state.items.filter(
-        (item) => Number(action.payload) !== Number(item.id)
+        (item) => Number(action.payload[0].id) !== Number(item.id)
       );
+      console.log("nnewUsers", newUsers);
 
       return { ...state, items: newUsers };
 
     case ItemsActionTypes.REMOVE__SORTED__ITEM:
-      console.log("экшнпайлоад", action.payload);
       const newSortedItems = state.sortedItems?.filter((item) => {
-        console.log(
-          "reduxitem",
-          item,
-          "item.id",
-          item.id,
-          "action.payload",
-          action.payload,
-          Number(item.id) !== Number(action.payload)
-        );
         return Number(item.id) !== Number(action.payload);
       });
 
       console.log("newSortedItems", newSortedItems);
+      console.log("reduxAllItems", action.payload.allItems);
 
-      return { ...state, sortedItems: newSortedItems };
-
-    case ItemsActionTypes.REMOVE__SORTED__ITEM:
-      const newSortedUsers = state.sortedItems && state.sortedItems.slice(0);
-
-      newSortedUsers!.shift();
-
-      return { ...state, sortedItems: newSortedUsers };
+      return { ...state, sortedItems: newSortedItems, items: newSortedItems };
 
     case ItemsActionTypes.FILTER__ITEM:
-      const data = action.payload;
+      console.log("filteractionPayload", action.payload);
+      const data = action.payload.data;
       console.log("data", data);
 
       for (let key in data) {
@@ -84,7 +71,11 @@ export const items = (
 
         cards.push(...newCards);
       } else {
-        cards.push(...state.items);
+        if (action.payload.dataEmpty) {
+          cards.push(...action.payload.allItems);
+        } else {
+          cards.push(...state.items);
+        }
       }
 
       const filteredName = cards.filter((user) => {

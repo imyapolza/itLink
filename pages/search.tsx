@@ -18,7 +18,7 @@ import Link from "next/link";
 import { SearchApi } from "./api/SearchApi";
 import { Api } from "./api/Api";
 import queryString from "query-string";
-import _ from "lodash";
+import _, { isEmpty } from "lodash";
 
 export interface SearchProps {
   users: Array<DataInterface>;
@@ -50,7 +50,10 @@ interface Response<T> {
 
 const limitPage = 2;
 
-export default function Search({ users }: SearchProps): React.ReactElement {
+export default function Search({
+  users,
+  allItems,
+}: SearchProps): React.ReactElement {
   const dispatch = useDispatch();
   const [activePage, setActivePage] = useState<number>(1);
   const [currentId, setCurrentId] = useState<string>("");
@@ -61,6 +64,8 @@ export default function Search({ users }: SearchProps): React.ReactElement {
   const [allPath, setAllPath] = useState<string>("");
   const [chet, setChet] = useState(0);
   const [obj, setObj] = useState();
+  const [eqw, setEqw] = useState(false);
+  const [dataEmpty, setDataEmpty] = useState(false);
   const sortedItems: Array<DataInterface> | undefined = useTypedSelector(
     (state) => state.users["sortedItems"]
   );
@@ -142,12 +147,18 @@ export default function Search({ users }: SearchProps): React.ReactElement {
         newObj[key] = parsedPath[key];
       }
     }
-    dispatch(filterItem(newObj));
+    dispatch(filterItem(newObj, dataEmpty, allItems));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSubmit = (data: any) => {
+    console.log(data);
+    for (let key in data) {
+      if (data[key].length > 0) {
+        setDataEmpty(true);
+      }
+    }
     setActivePage(1);
     setSubmit(true);
     setSubmitData(data);
@@ -157,14 +168,12 @@ export default function Search({ users }: SearchProps): React.ReactElement {
     }
 
     if (data !== undefined) {
-      dispatch(removeSortedItem(currentId));
+      console.log("экв", _.isEqual(obj, data));
+      setEqw(_.isEqual(obj, data));
+      dispatch(filterItem(data, dataEmpty, allItems));
       setObj(data);
-      if (_.isEqual(obj, data) === false) {
-        dispatch(filterItem(data));
-      }
     }
   };
-  console.log("chet", chet);
 
   useEffect(() => {
     if (sortedItems?.length === 0 && submit) {
@@ -202,18 +211,6 @@ export default function Search({ users }: SearchProps): React.ReactElement {
     }
   }
 
-  // useEffect(() => {
-  //   // console.log("11111");
-  //   // if (filteredItems?.length === 0 && activePage !== 1) {
-  //   //   setActivePage(activePage - 1);
-  //   // }
-
-  //   if (filteredItems?.length === 0) {
-  //     setActivePage((page) => page - 1);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [filteredItems, sortedItems]);
-
   console.log("передсорт", sortedItems);
   console.log("total", totalSortedItems);
   console.log("скок страниц", Math.ceil(sortedItems!.length / 2));
@@ -231,6 +228,9 @@ export default function Search({ users }: SearchProps): React.ReactElement {
 
   console.log("sortedItemsP", sortedItemsP);
   console.log("itemsP", itemsP);
+  console.log("eqwww", eqw);
+
+  console.log("dataEmpty", dataEmpty);
 
   return (
     <MainContainer keywords={"search"}>

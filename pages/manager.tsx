@@ -98,27 +98,29 @@ export default function List({
   function handleItems(currId: any) {
     let isDelete = confirm("Действительно удалить?");
     if (isDelete) {
+      setActivePage(1);
       setCurrentId(currId);
       const currUser: Array<DataInterface> = users.filter((item) => {
         return item.id === currId;
       });
 
       Api.deleteCard(urlItems, currId, currUser)
-        .then(() => dispatch(removeItem(currId)))
+        .then(() => dispatch(removeItem(currUser)))
         .catch((err: Error) => console.log(err));
     }
   }
 
   useEffect(() => {
-    dispatch(setItems(users));
-  }, [users]); // eslint-disable-line react-hooks/exhaustive-deps
+    dispatch(setItems(allItems));
+  }, [allItems]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onClickPage = (item: ItemInterface) => {
     console.log("item number", item.number);
     router.push("/manager?page=" + item.number);
     setActivePage(item.number);
-    dispatch(activePageManager(item.number));
   };
+
+  console.log("usersManager", users);
 
   if (users.length === 0) {
     return (
@@ -140,9 +142,8 @@ export default function List({
       <A href="/" text="Назад" />
 
       <div className={styles.cards}>
-        {items ? (
-          items.map((item, index: number) => {
-            console.log("item", item);
+        {users ? (
+          users.map((item, index: number) => {
             return (
               <Card className={styles.card} key={index}>
                 <Card.Img
