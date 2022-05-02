@@ -23,10 +23,11 @@ interface CreateProps {
 }
 
 export default function Create({ users }: ItemsState): React.ReactElement {
-  const [added, setAdded] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
   const [form, setForm] = useState<boolean>(false);
   const [send, setSend] = useState<boolean>(false);
   const [first, setfirst] = useState<string>("{}");
+  const [watchFormEmpty, setWatchFormEmpty] = useState<boolean>(false);
   const dataL = JSON.parse(first);
 
   const {
@@ -38,6 +39,7 @@ export default function Create({ users }: ItemsState): React.ReactElement {
     watch,
   } = useForm({
     mode: "onChange",
+    defaultValues: dataL,
   });
 
   const watchForm = watch();
@@ -75,11 +77,17 @@ export default function Create({ users }: ItemsState): React.ReactElement {
     data: T;
   }
 
+  console.log("watchForm", watchForm);
+  console.log("dataL", dataL);
+
   useEffect(() => {
-    if (Object.keys(dataL).length > 0) {
-      localStorage.setItem("data", JSON.stringify(watchForm));
+    console.log("watchForm", watchForm);
+    for (let key in watchForm) {
+      if (typeof watchForm[key] === "string" && watchForm[key].length > 0) {
+        localStorage.setItem("data", JSON.stringify(watchForm));
+      }
     }
-  }, [dataL, watchForm]);
+  }, [dataL, watchForm, watchFormEmpty]);
 
   const onSubmit = (
     data: DataInterface,
@@ -87,7 +95,7 @@ export default function Create({ users }: ItemsState): React.ReactElement {
   ) => {
     console.log("data", data);
     setForm(false);
-    setAdded(true);
+    setOpen(true);
     const newId = users.items && users.items[users.items.length - 1].id! + 1;
     let options = data.fieldArray;
 
@@ -112,8 +120,8 @@ export default function Create({ users }: ItemsState): React.ReactElement {
   return (
     <MainContainer keywords={"create"}>
       <MyVerticallyCenteredModal
-        show={added}
-        onHide={() => setAdded(false)}
+        show={open}
+        onHide={() => setOpen(false)}
         title="Данные сохранены"
         body="Успех"
       />
@@ -173,7 +181,6 @@ export default function Create({ users }: ItemsState): React.ReactElement {
 
             <div className={styles.otherForm}>
               <h2 className={styles.optionsText}>Доп. опции</h2>
-
               <OtherForm
                 errors={errors}
                 send={send}

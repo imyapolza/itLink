@@ -18,24 +18,16 @@ interface OtherFormProps {
 }
 
 export const OtherForm: React.FC<OtherFormProps> = ({
-  setOptions,
   register,
   control,
   watch,
+  errors,
 }: OtherFormProps): React.ReactElement => {
   // const { control, register } = useForm();
   const { append, remove, fields } = useFieldArray({
     control,
     name: "fieldArray",
   });
-
-  const [localStorageItems, setLocalStorageItems] = React.useState<
-    string | any
-  >("{}");
-
-  useEffect(() => {
-    setLocalStorageItems(localStorage.getItem("data"));
-  }, []);
 
   const watchFieldArray = watch("fieldArray");
   const controlledFields = fields.map((field, index) => {
@@ -45,21 +37,38 @@ export const OtherForm: React.FC<OtherFormProps> = ({
     };
   });
 
-  console.log("controlledFields", controlledFields);
-
   return (
     <>
       <div>
         <ul>
           {controlledFields.map((field, index) => {
             return (
-              <li key={field.id} style={{ display: "flex", marginTop: "10px" }}>
-                <input
-                  className="input"
-                  {...register(`fieldArray.${index}.name` as const)}
-                />
+              <li
+                key={field.id}
+                style={{
+                  marginTop: "10px",
+                  display: "flex",
+                  alignItems: "baseline",
+                }}
+              >
+                <div>
+                  <input
+                    className="input"
+                    style={{ height: "40px", marginTop: "10px" }}
+                    {...register(`fieldArray.${index}.name` as const, {
+                      required: "Обязательное поле",
+                    })}
+                  />
+                  {errors.fieldArray?.[index]?.name.message && (
+                    <p className="errorMessage">Введите опцию</p>
+                  )}
+                </div>
                 <Button
-                  style={{ marginLeft: "10px" }}
+                  style={{
+                    height: "40px",
+                    paddingTop: "0",
+                    marginLeft: "10px",
+                  }}
                   type="button"
                   onClick={() => remove(index)}
                   variant="danger"

@@ -30,7 +30,6 @@
 }
 
 .allCards {
-  width: 606px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -53,6 +52,7 @@
   width: 18rem;
   margin-top: 30px;
   margin-left: 15px;
+  height: 100%;
 }
 
 .cardImg {

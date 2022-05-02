@@ -27,11 +27,30 @@ export const items = (
       return { ...state, items: newItems };
 
     case ItemsActionTypes.REMOVE__ITEM:
-      const newUsers = state.items.slice(0);
-
-      newUsers.shift();
+      const newUsers = state.items.filter(
+        (item) => Number(action.payload) !== Number(item.id)
+      );
 
       return { ...state, items: newUsers };
+
+    case ItemsActionTypes.REMOVE__SORTED__ITEM:
+      console.log("экшнпайлоад", action.payload);
+      const newSortedItems = state.sortedItems?.filter((item) => {
+        console.log(
+          "reduxitem",
+          item,
+          "item.id",
+          item.id,
+          "action.payload",
+          action.payload,
+          Number(item.id) !== Number(action.payload)
+        );
+        return Number(item.id) !== Number(action.payload);
+      });
+
+      console.log("newSortedItems", newSortedItems);
+
+      return { ...state, sortedItems: newSortedItems };
 
     case ItemsActionTypes.REMOVE__SORTED__ITEM:
       const newSortedUsers = state.sortedItems && state.sortedItems.slice(0);

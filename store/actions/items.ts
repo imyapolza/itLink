@@ -16,7 +16,7 @@ export const removeItem = (flag: boolean) => ({
   payload: flag,
 });
 
-export const removeSortedItem = (flag: boolean) => ({
+export const removeSortedItem = (flag: any) => ({
   type: ItemsActionTypes.REMOVE__SORTED__ITEM,
   payload: flag,
 });

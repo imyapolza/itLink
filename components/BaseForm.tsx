@@ -24,6 +24,7 @@ export const BaseForm: React.FC<BaseFormProps> = ({
   description = true,
   submitData,
 }: BaseFormProps): React.ReactElement => {
+  console.log("errors", errors);
   return (
     <>
       <label className="label">

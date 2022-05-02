@@ -14,8 +14,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    
-    
+    "suppressImplicitAnyIndexErrors": true,
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "decompose/dataFormation.ts", "src", "declaration.d.ts"],
   "exclude": ["node_modules"]
