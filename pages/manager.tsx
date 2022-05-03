@@ -105,7 +105,8 @@ export default function List({
       });
 
       Api.deleteCard(urlItems, currId, currUser)
-        .then(() => dispatch(removeItem(currUser)))
+
+        .then(() => router.push("/manager?page=1"))
         .catch((err: Error) => console.log(err));
     }
   }
