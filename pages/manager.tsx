@@ -73,28 +73,6 @@ export default function List({
     itemsP.push({ number: number, active: number === activePage });
   }
 
-  useEffect(() => {
-    let flag = 0;
-
-    if (
-      items.length === 0 &&
-      activePage === itemsP.length &&
-      itemsP.length !== 1
-    ) {
-      router.push("/manager?page=" + (activePage - 1));
-      setActivePage(activePage - 1);
-      flag = 1;
-    }
-
-    if (flag === 0) {
-      if (items.length === 0 && itemsP.length !== 0) {
-        router.push("/manager?page=" + activePage);
-      }
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items, activePage]);
-
   function handleItems(currId: any) {
     let isDelete = confirm("Действительно удалить?");
     if (isDelete) {
